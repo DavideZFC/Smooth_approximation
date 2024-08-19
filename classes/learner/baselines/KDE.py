@@ -2,7 +2,7 @@ import numpy as np
 from classes.learner.baselines.kernels import *
 
 class KDE:
-    def __init__(self, h, K=None, n_max=10000):
+    def __init__(self, h, K=None, n_max=1000000):
 
         self.queries = np.zeros(n_max)
         self.evals = np.zeros(n_max)

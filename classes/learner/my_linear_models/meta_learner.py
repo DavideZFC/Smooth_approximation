@@ -6,7 +6,7 @@ import random
 
 
 class MetaLearner:
-    def __init__(self, basis, n_arms, d, optimal_deisgn=False, n_max=10000, new_idea=False):
+    def __init__(self, basis, n_arms, d, optimal_deisgn=False, n_max=1000000, new_idea=False):
         # dimension of the problem
         self.d = d
         self.basis = basis

@@ -4,7 +4,7 @@ from classes.learner.my_linear_models.meta_learner import MetaLearner
 
 class Poussin(MetaLearner):
 
-    def __init__(self, basis, n_arms, d, optimal_deisgn=False, n_max=10000, new_idea=False, n_pous=5):
+    def __init__(self, basis, n_arms, d, optimal_deisgn=False, n_max=1000000, new_idea=False, n_pous=5):
         super().__init__(basis, n_arms, d, optimal_deisgn, n_max, new_idea)
         self.n_pous = n_pous
         self.sample_all_noises()
