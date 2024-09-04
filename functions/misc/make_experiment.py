@@ -25,7 +25,7 @@ def save_parameters(policies, env, n, labels, dir):
 
 
 
-def make_experiment(policies, env, seeds, n, labels, exp_name=''):
+def make_experiment(policies, env, seeds, n, labels, exp_name='', save=True):
     '''
     Performs a RL experiment, estimating the reward curve and saving the data in a given folder
 
@@ -39,12 +39,13 @@ def make_experiment(policies, env, seeds, n, labels, exp_name=''):
     '''
 
     # create folder
-    tail = datetime.datetime.now().strftime("%y_%m_%d-%H_%M_")
-    dir = 'results/'+'_'+tail+exp_name
+    if save:
+        tail = datetime.datetime.now().strftime("%y_%m_%d-%H_%M_")
+        dir = 'results/'+'_'+tail+exp_name
 
-    os.mkdir(dir)
-    dir = dir+'/'
-    save_parameters(policies, env, n, labels, dir)
+        os.mkdir(dir)
+        dir = dir+'/'
+        save_parameters(policies, env, n, labels, dir)
 
     # in this dictionary, we store the running times of the algorithms
     running_times = {}
@@ -53,8 +54,10 @@ def make_experiment(policies, env, seeds, n, labels, exp_name=''):
     N = len(y_true)
     x = np.linspace(-1,1,N)
 
-    plt.plot(x,y_true,label='True curve')
-    np.save(dir+'true_curve',y_true)
+    
+    if save:
+        plt.plot(x,y_true,label='True curve')
+        np.save(dir+'true_curve',y_true)
     
     for i in range(len(policies)):
 
@@ -74,17 +77,19 @@ def make_experiment(policies, env, seeds, n, labels, exp_name=''):
         
         print(labels[i] + ' finished')
 
-        np.save(dir+labels[i], prediction_matrix)
+        if save:
+            np.save(dir+labels[i], prediction_matrix)
 
-        # make nonparametric confidence intervals
-        low, high = bootstrap_ci(prediction_matrix)
+            # make nonparametric confidence intervals
+            low, high = bootstrap_ci(prediction_matrix)
 
-        # make plot
-        plot_data(x, low, high, col='C{}'.format(i+1), label=labels[i])
+            # make plot
+            plot_data(x, low, high, col='C{}'.format(i+1), label=labels[i])
 
-    with open(dir+"running_times.json", "w") as f:
-        # Convert the dictionary to a JSON string and write it to the file
-        json.dump(running_times, f)
-    
-    plt.legend()
-    plt.savefig(dir+'predictions.pdf')
+    if save:
+        with open(dir+"running_times.json", "w") as f:
+            # Convert the dictionary to a JSON string and write it to the file
+            json.dump(running_times, f)
+        
+        plt.legend()
+        plt.savefig(dir+'predictions.pdf')
