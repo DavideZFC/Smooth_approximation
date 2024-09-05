@@ -5,7 +5,7 @@ from classes.learner.baselines.KDE import *
 from classes.learner.baselines.NW_estimator import *
 from functions.misc.make_experiment import make_experiment
 
-save = True
+save = False
 idx = 48
 sigma=0.1
 y = np.load('data\DuaLipaHoudini\{}.npy'.format(idx))
@@ -16,8 +16,8 @@ seeds = 5
 env = real_curve_fit(y=y,sigma=sigma)
 
 ##### compute order-optimal parameters
-nu = 4
-norm_est = 1000
+nu = 5
+norm_est = 100000
 h = norm_est**(-2/(2*nu+1))*n**(-1/(2*nu+1))
 d = int(n**(1/(2*nu+1))*norm_est**(2/(2*nu+1))*sigma**(-2/(2*nu+1)))
 
@@ -33,5 +33,6 @@ label2 = 'Poussin'+str(d)
 label3 = 'KDE_'+str(round(h,3))
 
 exp_name = 'NW_vs_KDE'
-make_experiment([agent1,agent2, agent3], env, seeds=seeds, n=n, labels=[label1, label2, label3], exp_name=exp_name, save=save)
+results_pol = make_experiment([agent1,agent2, agent3], env, seeds=seeds, n=n, labels=[label1, label2, label3], exp_name=exp_name, save=save)
 
+print(results_pol)

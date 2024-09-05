@@ -58,6 +58,8 @@ def make_experiment(policies, env, seeds, n, labels, exp_name='', save=True):
     if save:
         plt.plot(x,y_true,label='True curve')
         np.save(dir+'true_curve',y_true)
+
+    results_pol = []
     
     for i in range(len(policies)):
 
@@ -69,13 +71,14 @@ def make_experiment(policies, env, seeds, n, labels, exp_name='', save=True):
 
         # test the algorithm
 
-        L2err, Linferr, prediction_matrix = test_algorithm(policies[i], env, n=n, seeds=2)
+        L2err, Linferr, prediction_matrix = test_algorithm(policies[i], env, n=n, seeds=seeds)
+        results_pol.append(np.mean(Linferr))
 
         # store time
         t1 = time.time()
         running_times[labels[i]] = t1 - t0
         
-        print(labels[i] + ' finished')
+        # print(labels[i] + ' finished')
 
         if save:
             np.save(dir+labels[i], prediction_matrix)
@@ -93,3 +96,7 @@ def make_experiment(policies, env, seeds, n, labels, exp_name='', save=True):
         
         plt.legend()
         plt.savefig(dir+'predictions.pdf')
+
+    return results_pol
+
+    
