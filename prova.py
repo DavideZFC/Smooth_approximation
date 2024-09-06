@@ -25,6 +25,8 @@ print('h = {}, d = {}'.format(h,d))
 
 
 agent1 = NW(h=h)# Poussin('Fourier', 1000, d=100, optimal_deisgn=True, new_idea=True, n_max=n, n_pous=24)
+print(agent1.nu, agent1.h)
+
 agent2 =  Poussin('Fourier', 1000, d=d, optimal_deisgn=True, new_idea=True, n_max=n, n_pous=24)# MetaLearner('Poly', 1000, d=24, optimal_deisgn=True, new_idea=True, n_max=n)
 agent3 = KDE(h=h)
 

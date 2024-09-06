@@ -7,6 +7,7 @@ from functions.misc.test_algorithm import test_algorithm
 from functions.misc.plot_data import plot_data
 from functions.misc.confidence_bounds import bootstrap_ci
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 
 
 def save_parameters(policies, env, n, labels, dir):
@@ -61,7 +62,7 @@ def make_experiment(policies, env, seeds, n, labels, exp_name='', save=True):
 
     results_pol = []
     
-    for i in range(len(policies)):
+    for i in tqdm(range(len(policies))):
 
         ####################################
         # actual algorithm simulation
