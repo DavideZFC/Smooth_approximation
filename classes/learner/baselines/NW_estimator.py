@@ -18,6 +18,10 @@ class NW:
         else:
             self.K  = K
         self.idx = 0
+    
+    def adjust_params(self, nu, norm_est, n, sigma):
+        self.nu = nu
+        self.h = norm_est**(-2/(2*nu+1))*n**(-1/(2*nu+1))
 
     def get_data(self):
         par = {}

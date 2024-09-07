@@ -22,11 +22,20 @@ class MetaLearner:
         self.idx = 0
 
         self.linarms = self.apply_feature_map(self.arms)
+        self.optimal_deisgn = optimal_deisgn
         if optimal_deisgn:
             self.compute_optimal_design()
             if self.newidea:
                 self.compute_fixed_design()
         print('newidea = {}, nmax = {}, optimal_design = {}'.format(self.newidea, self.n_max, self.optimal_design))
+
+    def adjust_params_(self, d):
+        self.d = d
+        self.linarms = self.apply_feature_map(self.arms)
+        if self.optimal_deisgn:
+            self.compute_optimal_design()
+            if self.newidea:
+                self.compute_fixed_design()        
 
     def get_data(self):
         par = {}

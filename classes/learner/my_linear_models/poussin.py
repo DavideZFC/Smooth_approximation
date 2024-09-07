@@ -9,6 +9,13 @@ class Poussin(MetaLearner):
         self.n_pous = n_pous
         self.sample_all_noises()
 
+    def adjust_params(self, nu, norm_est, n, sigma):
+        
+        d = int(n**(1/(2*nu+1))*norm_est**(2/(2*nu+1))*sigma**(-2/(2*nu+1)))
+        self.adjust_params_(d)
+        self.n_pous = d
+        self.sample_all_noises()
+
     def get_data(self):
         par = {}
         par['Type'] = 'Poissin'
