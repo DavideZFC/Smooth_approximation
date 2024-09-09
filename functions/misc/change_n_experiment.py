@@ -98,6 +98,7 @@ def make_experiment(policies, env, seeds, n_vec, nu, norm_est, sigma, labels, ex
 
         for i in range(len(policies)):
             plt.plot(n_vec, running_times[labels[i]], marker='H', color='C{}'.format(i+1), label=labels[i])
+            np.save(dir+labels[i]+'running', running_times[labels[i]])
 
         plt.yscale('log')
         plt.legend()
